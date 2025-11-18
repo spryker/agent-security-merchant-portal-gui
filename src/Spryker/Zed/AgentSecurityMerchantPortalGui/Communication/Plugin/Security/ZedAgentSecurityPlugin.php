@@ -13,14 +13,10 @@ use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated The plugin has been split. Use the following plugins instead:
- * - {@link \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedAgentSecurityPlugin}
- * - {@link \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedMerchantUserSecurityPlugin}
- *
  * @method \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\AgentSecurityMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig getConfig()
  */
-class ZedAgentMerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class ZedAgentSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
     /**
      * {@inheritDoc}

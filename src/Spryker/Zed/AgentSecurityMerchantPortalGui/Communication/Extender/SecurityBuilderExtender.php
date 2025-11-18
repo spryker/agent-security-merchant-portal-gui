@@ -69,9 +69,44 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
         $securityBuilder = $this->addFirewalls($securityBuilder);
+        $securityBuilder = $this->extendMerchantUser($securityBuilder);
         $securityBuilder = $this->addAccessRules($securityBuilder);
         $securityBuilder = $this->addSwitchUserEventSubscriber($securityBuilder);
         $securityBuilder = $this->securityBuilderAuthenticatorExtender->extend($securityBuilder, $container);
+
+        return $securityBuilder;
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    public function extendAgent(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
+    {
+        $securityBuilder = $this->addFirewalls($securityBuilder);
+        $securityBuilder = $this->addAccessRules($securityBuilder);
+        $securityBuilder = $this->addSwitchUserEventSubscriber($securityBuilder);
+        $securityBuilder = $this->securityBuilderAuthenticatorExtender->extend($securityBuilder, $container);
+
+        return $securityBuilder;
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    public function extendMerchantUser(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    {
+        $securityBuilder->mergeFirewall($this->agentSecurityMerchantPortalGuiConfig->getMerchantUserSecurityFirewallName(), [
+            'context' => $this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(),
+            'switch_user' => [
+                'parameter' => '_switch_user',
+                'role' => $this->agentSecurityMerchantPortalGuiConfig->getRoleAllowedToSwitch(),
+            ],
+        ]);
 
         return $securityBuilder;
     }
@@ -87,14 +122,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
             $this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(),
             $this->optionsBuilder->buildOptions(),
         );
-
-        $securityBuilder->mergeFirewall($this->agentSecurityMerchantPortalGuiConfig->getMerchantUserSecurityFirewallName(), [
-            'context' => $this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(),
-            'switch_user' => [
-                'parameter' => '_switch_user',
-                'role' => $this->agentSecurityMerchantPortalGuiConfig->getRoleAllowedToSwitch(),
-            ],
-        ]);
 
         return $securityBuilder;
     }

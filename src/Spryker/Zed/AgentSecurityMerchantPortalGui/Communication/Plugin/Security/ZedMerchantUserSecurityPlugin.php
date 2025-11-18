@@ -13,14 +13,13 @@ use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated The plugin has been split. Use the following plugins instead:
- * - {@link \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedAgentSecurityPlugin}
- * - {@link \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedMerchantUserSecurityPlugin}
+ * @requires \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedAgentSecurityPlugin
+ * @requires \Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\ZedAgentSecurityPlugin
  *
  * @method \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\AgentSecurityMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig getConfig()
  */
-class ZedAgentMerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class ZedMerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -37,6 +36,6 @@ class ZedAgentMerchantUserSecurityPlugin extends AbstractPlugin implements Secur
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
-        return $this->getFactory()->createSecurityBuilderExtender()->extend($securityBuilder, $container);
+        return $this->getFactory()->createSecurityBuilderExtender()->extendMerchantUser($securityBuilder);
     }
 }
