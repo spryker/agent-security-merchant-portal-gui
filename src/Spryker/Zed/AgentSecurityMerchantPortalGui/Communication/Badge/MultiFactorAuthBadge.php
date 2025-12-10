@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\AuthenticationCodeInvalidatorPluginInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
 class MultiFactorAuthBadge implements BadgeInterface
 {
     /**
-     * @uses \Spryker\Zed\MultiFactorAuth\Communication\Plugin\AuthenticationHandler\MerchantAgentUser\MerchantAgentUserMultiFactorAuthenticationHandlerPlugin::MERCHANT_AGENT_USER_MULTI_FACTOR_AUTHENTICATION_HANDLER_NAME
+     * @uses \Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Plugin\AuthenticationHandler\MerchantAgentUser\MerchantAgentUserMultiFactorAuthenticationHandlerPlugin::MERCHANT_AGENT_USER_MULTI_FACTOR_AUTHENTICATION_HANDLER_NAME
      *
      * @var string
      */
@@ -49,16 +51,6 @@ class MultiFactorAuthBadge implements BadgeInterface
     public function isResolved(): bool
     {
         return $this->isResolved;
-    }
-
-    /**
-     * @param bool $isResolved
-     *
-     * @return void
-     */
-    public function setIsResolved(bool $isResolved): void
-    {
-        $this->isResolved = $isResolved;
     }
 
     /**
@@ -109,8 +101,17 @@ class MultiFactorAuthBadge implements BadgeInterface
                 continue;
             }
 
-            $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setUser($userTransfer);
+            $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())
+                ->setUser($userTransfer)
+                ->setIsLogin(true);
             $multiFactorAuthValidationResponseTransfer = $plugin->validateMerchantUserMultiFactorStatus($multiFactorAuthValidationRequestTransfer);
+
+            if ($multiFactorAuthValidationResponseTransfer->getIsRequired() === true) {
+                if ($plugin instanceof AuthenticationCodeInvalidatorPluginInterface) {
+                    $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())->setUser($userTransfer);
+                    $plugin->invalidateMerchantUserCodes($multiFactorAuthTransfer);
+                }
+            }
 
             $this->setIsRequired($multiFactorAuthValidationResponseTransfer->getIsRequiredOrFail());
             $this->setStatus($multiFactorAuthValidationResponseTransfer->getStatus());
