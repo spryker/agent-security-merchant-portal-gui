@@ -28,17 +28,11 @@ class AuditLoggerUserProvider implements AuditLoggerUserProviderInterface
      */
     protected TokenStorageInterface $tokenStorage;
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
     public function findOriginalUser(): ?UserTransfer
     {
         $token = $this->tokenStorage->getToken();
@@ -66,21 +60,11 @@ class AuditLoggerUserProvider implements AuditLoggerUserProviderInterface
         return null;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface|null $token
-     *
-     * @return bool
-     */
     public function isPostAuthTokenForAgentMerchantUser(?TokenInterface $token): bool
     {
         return $token instanceof PostAuthenticationToken && $token->getUser() instanceof AgentMerchantUser;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface|null $token
-     *
-     * @return bool
-     */
     public function isSwitchUserTokenForMerchantUser(?TokenInterface $token): bool
     {
         $merchantUserClassName = static::MERCHANT_USER_CLASS_NAME;

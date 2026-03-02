@@ -71,9 +71,6 @@ class AgentMerchantLoginForm extends AbstractType
             ->addLoginButton($builder);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;

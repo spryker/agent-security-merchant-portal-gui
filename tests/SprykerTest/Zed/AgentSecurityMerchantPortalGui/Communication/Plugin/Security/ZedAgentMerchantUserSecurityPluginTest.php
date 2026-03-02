@@ -93,9 +93,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
      */
     protected AgentSecurityMerchantPortalGuiCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         parent::_before();
@@ -117,9 +114,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
         $this->tester->resetSecurityConfiguration();
     }
 
-    /**
-     * @return void
-     */
     public function testUserCanLogin(): void
     {
         // Arrange
@@ -237,9 +231,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
         ];
     }
 
-    /**
-     * @return \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface
-     */
     protected function createMerchantUserSecurityPlugin(): SecurityPluginInterface
     {
         return new class implements SecurityPluginInterface
@@ -251,12 +242,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
              */
             protected const MERCHANT_USER_SECURITY_FIREWALL_NAME = 'MerchantUser';
 
-            /**
-             * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-             * @param \Spryker\Service\Container\ContainerInterface $container
-             *
-             * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-             */
             public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
             {
                 return $securityBuilder->addFirewall(
@@ -267,9 +252,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
         };
     }
 
-    /**
-     * @return void
-     */
     protected function tearDown(): void
     {
         parent::tearDown();

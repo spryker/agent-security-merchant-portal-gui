@@ -76,11 +76,6 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
         return new RedirectResponse($this->getTargetUrl($request));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return void
-     */
     public function executeOnAuthenticationSuccess(UserTransfer $userTransfer): void
     {
         $this->getFactory()->getUserFacade()->setCurrentUser($userTransfer);
@@ -88,21 +83,11 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
         $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
     protected function getTargetUrl(Request $request): string
     {
         return $this->getTargetPath($request->getSession(), $this->getConfig()->getSecurityFirewallName()) ?? $this->getConfig()->getUrlDefaultTarget();
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     protected function createOpenModalResponse(Request $request): JsonResponse
     {
         /** @var string|null $formSelector */
@@ -120,11 +105,6 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
             ->toArray());
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     protected function createRedirectResponse(Request $request): JsonResponse
     {
         return new JsonResponse($this->getFactory()
@@ -135,9 +115,6 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
             ->toArray());
     }
 
-    /**
-     * @return string
-     */
     protected function generateRoute(): string
     {
         $router = $this->getFactory()->getRouterFacade()->getMerchantPortalChainRouter();

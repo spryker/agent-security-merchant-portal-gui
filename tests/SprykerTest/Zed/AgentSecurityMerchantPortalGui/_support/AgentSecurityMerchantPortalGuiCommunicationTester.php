@@ -31,9 +31,6 @@ class AgentSecurityMerchantPortalGuiCommunicationTester extends Actor
 {
     use _generated\AgentSecurityMerchantPortalGuiCommunicationTesterActions;
 
-    /**
-     * @return void
-     */
     public function resetSecurityConfiguration(): void
     {
         $reflection = new ReflectionClass(SecurityConfigurator::class);

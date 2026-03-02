@@ -77,11 +77,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
      */
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -100,11 +95,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMessengerFacade(Container $container): Container
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
@@ -116,11 +106,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSecurityFacade(Container $container): Container
     {
         $container->set(static::FACADE_SECURITY, function (Container $container) {
@@ -132,11 +117,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMerchantUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
@@ -148,11 +128,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_USER, function (Container $container) {
@@ -164,11 +139,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addRouterFacade(Container $container): Container
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {
@@ -180,11 +150,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addAuthorizationCheckerService(Container $container): Container
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (Container $container) {
@@ -194,11 +159,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTokenStorageService(Container $container): Container
     {
         $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
@@ -208,11 +168,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMerchantAgentUserAuthenticationHandlerPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_MERCHANT_AGENT_USER_AUTHENTICATION_HANDLER, function () {
@@ -230,11 +185,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSessionClient(Container $container): Container
     {
         $container->set(static::CLIENT_SESSION, function (Container $container) {
@@ -246,11 +196,6 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addZedUiFactory(Container $container): Container
     {
         $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {

@@ -42,13 +42,6 @@ class SecurityBuilderAuthenticatorExtender implements SecurityBuilderAuthenticat
      */
     protected SymfonyVersionCheckerInterface $symfonyVersionChecker;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
-     * @param \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface $agentMerchantLoginFormAuthenticator
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface $authenticationFailureHandler
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionCheckerInterface $symfonyVersionChecker
-     */
     public function __construct(
         AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
         AuthenticatorInterface $agentMerchantLoginFormAuthenticator,
@@ -63,12 +56,6 @@ class SecurityBuilderAuthenticatorExtender implements SecurityBuilderAuthenticat
         $this->symfonyVersionChecker = $symfonyVersionChecker;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
         if ($this->symfonyVersionChecker->isSymfonyVersion5()) {
@@ -85,11 +72,6 @@ class SecurityBuilderAuthenticatorExtender implements SecurityBuilderAuthenticat
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         $securityBuilder->addAuthenticationSuccessHandler($this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(), function () {
@@ -99,11 +81,6 @@ class SecurityBuilderAuthenticatorExtender implements SecurityBuilderAuthenticat
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         $securityBuilder->addAuthenticationFailureHandler($this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(), function () {

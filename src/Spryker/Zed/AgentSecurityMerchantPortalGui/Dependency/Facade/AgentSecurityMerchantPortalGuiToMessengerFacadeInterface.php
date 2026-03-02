@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface AgentSecurityMerchantPortalGuiToMessengerFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
     public function addErrorMessage(MessageTransfer $messageTransfer): void;
 }

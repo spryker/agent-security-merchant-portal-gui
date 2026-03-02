@@ -27,9 +27,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class AuthenticationFailureHandlerTest extends AbstractPluginTest
 {
-    /**
-     * @return void
-     */
     public function testOnAuthenticationFailureAddsAgentFailedLoginAuditLog(): void
     {
         // Arrange
@@ -39,11 +36,6 @@ class AuthenticationFailureHandlerTest extends AbstractPluginTest
         $authenticationFailureHandler->onAuthenticationFailure(new Request(), new AuthenticationException());
     }
 
-    /**
-     * @param string $expectedMessage
-     *
-     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Handler\AuthenticationFailureHandler
-     */
     protected function getAuthenticationFailureHandler(string $expectedMessage): AuthenticationFailureHandler
     {
         $agentSecurityMerchantPortalGuiCommunicationFactoryMock = $this->getAgentSecurityMerchantPortalGuiCommunicationFactoryMock($expectedMessage);

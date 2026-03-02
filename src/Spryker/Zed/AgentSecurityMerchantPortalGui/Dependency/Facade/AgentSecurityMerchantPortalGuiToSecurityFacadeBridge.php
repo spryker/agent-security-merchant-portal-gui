@@ -22,9 +22,6 @@ class AgentSecurityMerchantPortalGuiToSecurityFacadeBridge implements AgentSecur
         $this->securityFacade = $securityFacade;
     }
 
-    /**
-     * @return bool
-     */
     public function isUserLoggedIn(): bool
     {
         return $this->securityFacade->isUserLoggedIn();

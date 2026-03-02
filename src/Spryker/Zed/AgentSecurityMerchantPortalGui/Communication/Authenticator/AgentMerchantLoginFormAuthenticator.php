@@ -45,13 +45,6 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
      */
     protected const CODE_BLOCKED = 1;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
-     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $agentMerchantUserProvider
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface $authenticationFailureHandler
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge $multiFactorAuthBadge
-     */
     public function __construct(
         protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
         protected UserProviderInterface $agentMerchantUserProvider,
@@ -61,11 +54,6 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\Security\Http\Authenticator\Passport\Passport
-     */
     public function authenticate(Request $request): Passport
     {
         $data = $request->request->all(static::AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST);
@@ -83,45 +71,21 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool|null
-     */
     public function supports(Request $request): ?bool
     {
         return $request->request->has(static::AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @param string $firewallName
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return $this->authenticationSuccessHandler->onAuthenticationSuccess($request, $token);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         return $this->authenticationFailureHandler->onAuthenticationFailure($request, $exception);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException|null $authException
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         return new RedirectResponse($this->agentSecurityMerchantPortalGuiConfig->getUrlLogin());
@@ -161,11 +125,6 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
         return $this->createToken($passport, $firewallName);
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
-     *
-     * @return bool
-     */
     protected function assertUserIsPreAuthenticated(Passport $passport): bool
     {
         /** @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */

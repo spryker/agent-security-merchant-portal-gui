@@ -32,9 +32,6 @@ use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
  */
 class AuthenticationSuccessHandlerTest extends AbstractPluginTest
 {
-    /**
-     * @return void
-     */
     public function testOnAuthenticationSuccessAddsAgentSuccessfulLoginAuditLog(): void
     {
         // Arrange
@@ -46,11 +43,6 @@ class AuthenticationSuccessHandlerTest extends AbstractPluginTest
         $authenticationSuccessHandler->onAuthenticationSuccess($request, $this->getPostAuthenticationTokenMock());
     }
 
-    /**
-     * @param string $expectedMessage
-     *
-     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Handler\AuthenticationSuccessHandler
-     */
     protected function getAuthenticationSuccessHandler(string $expectedMessage): AuthenticationSuccessHandler
     {
         $agentSecurityMerchantPortalGuiCommunicationFactoryMock = $this->getAgentSecurityMerchantPortalGuiCommunicationFactoryMock($expectedMessage);

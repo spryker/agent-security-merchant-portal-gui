@@ -30,31 +30,16 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
      */
     protected const COL_STATUS_ACTIVE = 'active';
 
-    /**
-     * @param string $username
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     public function loadUserByUsername(string $username): UserInterface
     {
         return $this->loadUserByIdentifier($username);
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         return $this->createSecurityUserByUsername($identifier);
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     public function refreshUser(UserInterface $user): UserInterface
     {
         if ($user instanceof AgentMerchantUser) {
@@ -68,22 +53,12 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         return $user;
     }
 
-    /**
-     * @param string $class
-     *
-     * @return bool
-     */
     public function supportsClass(string $class): bool
     {
         return is_a($class, AgentMerchantUser::class, true)
             || is_a($class, $this->getConfig()->getMerchantUserClassName(), true);
     }
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUser $user
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     protected function refreshAgentMerchantUser(AgentMerchantUser $user): UserInterface
     {
         return $this->createSecurityUserByUsername(
@@ -91,11 +66,6 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         );
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     protected function refreshMerchantUser(UserInterface $user): UserInterface
     {
         /** @phpstan-var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $user */
@@ -113,11 +83,6 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         return $user;
     }
 
-    /**
-     * @param string $username
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
     protected function createSecurityUserByUsername(string $username): UserInterface
     {
         $userTransfer = $this->findUserByUsername($username);
@@ -130,11 +95,6 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         return $this->getFactory()->createSecurityUser($userTransfer);
     }
 
-    /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
     protected function findUserByUsername(string $username): ?UserTransfer
     {
         $userCriteriaTransfer = (new UserCriteriaTransfer())

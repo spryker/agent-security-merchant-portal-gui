@@ -23,10 +23,6 @@ class MerchantUserCriteriaExpander implements MerchantUserCriteriaExpanderInterf
      */
     protected AuthorizationCheckerInterface $authorizationChecker;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
-     */
     public function __construct(
         AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
         AuthorizationCheckerInterface $authorizationChecker
@@ -35,11 +31,6 @@ class MerchantUserCriteriaExpander implements MerchantUserCriteriaExpanderInterf
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserCriteriaTransfer
-     */
     public function expand(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): MerchantUserCriteriaTransfer
     {
         if (

@@ -30,11 +30,6 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\SwitchUserEvent $switchUserEvent
-     *
-     * @return void
-     */
     public function switchUser(SwitchUserEvent $switchUserEvent): void
     {
         $targetUser = $switchUserEvent->getTargetUser();
@@ -57,11 +52,6 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
         }
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\SwitchUserEvent $switchUserEvent
-     *
-     * @return string|null
-     */
     protected function findAgentUsername(SwitchUserEvent $switchUserEvent): ?string
     {
         $token = $switchUserEvent->getToken();

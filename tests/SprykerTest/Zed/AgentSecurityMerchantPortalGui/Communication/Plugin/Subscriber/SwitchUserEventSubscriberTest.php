@@ -30,9 +30,6 @@ use Symfony\Component\Security\Http\Event\SwitchUserEvent;
  */
 class SwitchUserEventSubscriberTest extends AbstractPluginTest
 {
-    /**
-     * @return void
-     */
     public function testSwitchUserAddsImpersonationStartedAuditLog(): void
     {
         // Arrange
@@ -45,9 +42,6 @@ class SwitchUserEventSubscriberTest extends AbstractPluginTest
         $switchUserEventSubscriber->switchUser($switchUserEvent);
     }
 
-    /**
-     * @return void
-     */
     public function testSwitchUserAddsImpersonationEndedAuditLog(): void
     {
         // Arrange
@@ -60,11 +54,6 @@ class SwitchUserEventSubscriberTest extends AbstractPluginTest
         $switchUserEventSubscriber->switchUser($switchUserEvent);
     }
 
-    /**
-     * @param string $expectedMessage
-     *
-     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Subscriber\SwitchUserEventSubscriber
-     */
     protected function getSwitchUserEventSubscriber(string $expectedMessage): SwitchUserEventSubscriber
     {
         $agentSecurityMerchantPortalGuiCommunicationFactoryMock = $this->getAgentSecurityMerchantPortalGuiCommunicationFactoryMock($expectedMessage);

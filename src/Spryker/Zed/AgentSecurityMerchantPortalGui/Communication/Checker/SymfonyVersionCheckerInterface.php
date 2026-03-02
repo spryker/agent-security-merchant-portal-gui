@@ -12,8 +12,5 @@ namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker;
  */
 interface SymfonyVersionCheckerInterface
 {
-    /**
-     * @return bool
-     */
     public function isSymfonyVersion5(): bool;
 }

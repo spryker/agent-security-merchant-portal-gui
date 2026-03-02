@@ -24,11 +24,6 @@ class AgentSecurityMerchantPortalGuiToMessengerFacadeBridge implements AgentSecu
         $this->messengerFacade = $messengerFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
     public function addErrorMessage(MessageTransfer $messageTransfer): void
     {
         $this->messengerFacade->addErrorMessage($messageTransfer);

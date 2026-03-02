@@ -45,45 +45,26 @@ class MultiFactorAuthBadge implements BadgeInterface
     ) {
     }
 
-    /**
-     * @return bool
-     */
     public function isResolved(): bool
     {
         return $this->isResolved;
     }
 
-    /**
-     * @param bool $isRequired
-     *
-     * @return void
-     */
     public function setIsRequired(bool $isRequired): void
     {
         $this->isRequired = $isRequired;
     }
 
-    /**
-     * @return bool
-     */
     public function getIsRequired(): bool
     {
         return $this->isRequired;
     }
 
-    /**
-     * @param int|null $status
-     *
-     * @return void
-     */
     public function setStatus(?int $status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return int|null
-     */
     public function getStatus(): ?int
     {
         return $this->status;

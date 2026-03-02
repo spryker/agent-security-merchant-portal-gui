@@ -13,16 +13,8 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentSecurityMerchantPortalGuiToUserFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserCollectionTransfer
-     */
     public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
     public function getCurrentUser(): UserTransfer;
 
     /**

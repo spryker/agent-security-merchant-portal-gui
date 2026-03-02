@@ -27,12 +27,6 @@ class AuthenticationFailureHandler extends AbstractPlugin implements Authenticat
      */
     protected const MESSAGE_AUTHENTICATION_FAILED = 'Authentication failed!';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $this->getFactory()
@@ -50,9 +44,6 @@ class AuthenticationFailureHandler extends AbstractPlugin implements Authenticat
         return new RedirectResponse($this->getConfig()->getUrlLogin());
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     protected function createRedirectResponse(): JsonResponse
     {
         return new JsonResponse($this->getFactory()

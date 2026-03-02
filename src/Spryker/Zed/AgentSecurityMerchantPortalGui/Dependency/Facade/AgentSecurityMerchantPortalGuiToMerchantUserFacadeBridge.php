@@ -24,11 +24,6 @@ class AgentSecurityMerchantPortalGuiToMerchantUserFacadeBridge implements AgentS
         $this->merchantUserFacade = $merchantUserFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     *
-     * @return void
-     */
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
         $this->merchantUserFacade->authenticateMerchantUser($merchantUserTransfer);

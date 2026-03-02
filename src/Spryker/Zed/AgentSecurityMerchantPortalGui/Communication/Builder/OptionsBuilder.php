@@ -36,11 +36,6 @@ class OptionsBuilder implements OptionsBuilderInterface
      */
     protected SymfonyVersionCheckerInterface $symfonyVersionChecker;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
-     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $agentMerchantUserProvider
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionCheckerInterface $symfonyVersionChecker
-     */
     public function __construct(
         AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
         UserProviderInterface $agentMerchantUserProvider,

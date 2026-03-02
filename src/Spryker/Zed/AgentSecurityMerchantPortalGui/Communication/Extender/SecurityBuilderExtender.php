@@ -42,12 +42,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
      */
     protected SecurityBuilderAuthenticatorExtenderInterface $securityBuilderAuthenticatorExtender;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface $optionsBuilder
-     * @param \Symfony\Component\EventDispatcher\EventSubscriberInterface $switchUserEventSubscriber
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Extender\SecurityBuilderAuthenticatorExtenderInterface $securityBuilderAuthenticatorExtender
-     */
     public function __construct(
         AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
         OptionsBuilderInterface $optionsBuilder,
@@ -60,12 +54,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         $this->securityBuilderAuthenticatorExtender = $securityBuilderAuthenticatorExtender;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
         $securityBuilder = $this->addFirewalls($securityBuilder);
@@ -77,12 +65,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function extendAgent(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
         $securityBuilder = $this->addFirewalls($securityBuilder);
@@ -93,11 +75,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function extendMerchantUser(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         $securityBuilder->mergeFirewall($this->agentSecurityMerchantPortalGuiConfig->getMerchantUserSecurityFirewallName(), [
@@ -111,11 +88,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         $securityBuilder->addFirewall(
@@ -126,11 +98,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAccessRules(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         return $securityBuilder->addAccessRules([
@@ -148,11 +115,6 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         ]);
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addSwitchUserEventSubscriber(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         return $securityBuilder->addEventSubscriber(function () {

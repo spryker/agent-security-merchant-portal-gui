@@ -34,33 +34,21 @@ class AuditLogger implements AuditLoggerInterface
      */
     protected AuditLoggerUserProviderInterface $auditLoggerUserProvider;
 
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\DataProvider\AuditLoggerUserProviderInterface $auditLoggerUserProvider
-     */
     public function __construct(AuditLoggerUserProviderInterface $auditLoggerUserProvider)
     {
         $this->auditLoggerUserProvider = $auditLoggerUserProvider;
     }
 
-    /**
-     * @return void
-     */
     public function addAgentFailedLoginAuditLog(): void
     {
         $this->addAuditLog('Failed Login (Agent)', [static::AUDIT_LOGGER_RECORD_KEY_CONTEXT_TAGS => ['agent_failed_login']]);
     }
 
-    /**
-     * @return void
-     */
     public function addAgentSuccessfulLoginAuditLog(): void
     {
         $this->addAuditLog('Successful Login (Agent)', [static::AUDIT_LOGGER_RECORD_KEY_CONTEXT_TAGS => ['agent_successful_login']]);
     }
 
-    /**
-     * @return void
-     */
     public function addImpersonationStartedAuditLog(): void
     {
         $context = $this->addOriginalUserContext([static::AUDIT_LOGGER_RECORD_KEY_CONTEXT_TAGS => ['impersonation_started']]);
@@ -68,9 +56,6 @@ class AuditLogger implements AuditLoggerInterface
         $this->addAuditLog('Impersonation Started', $context);
     }
 
-    /**
-     * @return void
-     */
     public function addImpersonationEndedAuditLog(): void
     {
         $context = $this->addOriginalUserContext([static::AUDIT_LOGGER_RECORD_KEY_CONTEXT_TAGS => ['impersonation_ended']]);

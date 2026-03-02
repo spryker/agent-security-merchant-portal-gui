@@ -11,8 +11,5 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AuditLoggerUserProviderInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
     public function findOriginalUser(): ?UserTransfer;
 }

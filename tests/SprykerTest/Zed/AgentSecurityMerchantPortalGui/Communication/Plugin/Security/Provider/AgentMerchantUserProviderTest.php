@@ -86,9 +86,6 @@ class AgentMerchantUserProviderTest extends Unit
      */
     protected AgentSecurityMerchantPortalGuiCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -98,9 +95,6 @@ class AgentMerchantUserProviderTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testRefreshUserReturnsAgentMerchantUserWhenUserIsActiveMerchantAgent(): void
     {
         // Arrange
@@ -122,9 +116,6 @@ class AgentMerchantUserProviderTest extends Unit
         $this->assertSame($userTransfer->getIdUserOrFail(), $refreshedUser->getUserTransfer()->getIdUser());
     }
 
-    /**
-     * @return void
-     */
     public function testRefreshUserReturnsUnmodifiedMerchantUserWhenAgentIsImpersonatorOfMerchantUser(): void
     {
         // Arrange
@@ -146,9 +137,6 @@ class AgentMerchantUserProviderTest extends Unit
         $this->assertSame($user, $refreshedUser);
     }
 
-    /**
-     * @return void
-     */
     public function testRefreshUserReturnsUnmodifiedMerchantUserWhenAgentUsernameIsNotProvidedInMerchantUserTransfer(): void
     {
         // Arrange
