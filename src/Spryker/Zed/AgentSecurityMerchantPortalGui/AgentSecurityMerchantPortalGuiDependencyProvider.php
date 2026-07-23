@@ -65,6 +65,8 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
      */
     public const PLUGINS_MERCHANT_AGENT_USER_AUTHENTICATION_HANDLER = 'PLUGINS_MERCHANT_AGENT_USER_AUTHENTICATION_HANDLER';
 
+    public const string PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION = 'PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION';
+
     /**
      * @var string
      */
@@ -89,10 +91,28 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         $container = $this->addAuthorizationCheckerService($container);
         $container = $this->addTokenStorageService($container);
         $container = $this->addMerchantAgentUserAuthenticationHandlerPlugins($container);
+        $container = $this->addMerchantUserLoginRestrictionPlugins($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedUiFactory($container);
 
         return $container;
+    }
+
+    protected function addMerchantUserLoginRestrictionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION, function () {
+            return $this->getMerchantUserLoginRestrictionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
+     */
+    protected function getMerchantUserLoginRestrictionPlugins(): array
+    {
+        return [];
     }
 
     protected function addMessengerFacade(Container $container): Container

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
 interface AgentSecurityMerchantPortalGuiToMerchantUserFacadeInterface
 {
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void;
+
+    public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
 }

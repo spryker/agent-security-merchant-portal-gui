@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Handler\AccessDeniedHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
@@ -21,6 +22,8 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
      * @var string
      */
     protected const PUBLIC_ACCESS = 'PUBLIC_ACCESS';
+
+    protected const string SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
@@ -59,6 +62,7 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
         $securityBuilder = $this->addFirewalls($securityBuilder);
         $securityBuilder = $this->extendMerchantUser($securityBuilder);
         $securityBuilder = $this->addAccessRules($securityBuilder);
+        $securityBuilder = $this->addAccessDeniedHandler($securityBuilder, $container);
         $securityBuilder = $this->addSwitchUserEventSubscriber($securityBuilder);
         $securityBuilder = $this->securityBuilderAuthenticatorExtender->extend($securityBuilder, $container);
 
@@ -69,6 +73,7 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
     {
         $securityBuilder = $this->addFirewalls($securityBuilder);
         $securityBuilder = $this->addAccessRules($securityBuilder);
+        $securityBuilder = $this->addAccessDeniedHandler($securityBuilder, $container);
         $securityBuilder = $this->addSwitchUserEventSubscriber($securityBuilder);
         $securityBuilder = $this->securityBuilderAuthenticatorExtender->extend($securityBuilder, $container);
 
@@ -113,6 +118,21 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
                 ],
             ],
         ]);
+    }
+
+    protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
+    {
+        $securityBuilder->addAccessDeniedHandler(
+            $this->agentSecurityMerchantPortalGuiConfig->getSecurityFirewallName(),
+            function () use ($container) {
+                return new AccessDeniedHandler(
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $this->agentSecurityMerchantPortalGuiConfig->getUrlLogin(),
+                );
+            },
+        );
+
+        return $securityBuilder;
     }
 
     protected function addSwitchUserEventSubscriber(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface

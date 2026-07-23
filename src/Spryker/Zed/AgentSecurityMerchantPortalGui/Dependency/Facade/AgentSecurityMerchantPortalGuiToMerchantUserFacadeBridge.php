@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
 class AgentSecurityMerchantPortalGuiToMerchantUserFacadeBridge implements AgentSecurityMerchantPortalGuiToMerchantUserFacadeInterface
@@ -27,5 +28,10 @@ class AgentSecurityMerchantPortalGuiToMerchantUserFacadeBridge implements AgentS
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
         $this->merchantUserFacade->authenticateMerchantUser($merchantUserTransfer);
+    }
+
+    public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
+    {
+        return $this->merchantUserFacade->findMerchantUser($merchantUserCriteriaTransfer);
     }
 }

@@ -8,12 +8,14 @@
 namespace SprykerTest\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Provider;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Provider\AgentMerchantUserProvider;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUser;
 use Spryker\Zed\MerchantAgent\Communication\Plugin\User\MerchantAgentUserQueryCriteriaExpanderPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
+use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface;
 use SprykerTest\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiCommunicationTester;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
@@ -54,6 +56,13 @@ class AgentMerchantUserProviderTest extends Unit
     protected const STATUS_ACTIVE = 'active';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const string MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
      * @uses \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig::ROLE_MERCHANT_AGENT
      *
      * @var string
@@ -80,6 +89,13 @@ class AgentMerchantUserProviderTest extends Unit
      * @var string
      */
     protected const PLUGINS_USER_QUERY_CRITERIA_EXPANDER = 'PLUGINS_USER_QUERY_CRITERIA_EXPANDER';
+
+    /**
+     * @uses \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION
+     *
+     * @var string
+     */
+    protected const string PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION = 'PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION';
 
     /**
      * @var \SprykerTest\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiCommunicationTester
@@ -137,19 +153,56 @@ class AgentMerchantUserProviderTest extends Unit
         $this->assertSame($user, $refreshedUser);
     }
 
-    public function testRefreshUserReturnsUnmodifiedMerchantUserWhenAgentUsernameIsNotProvidedInMerchantUserTransfer(): void
+    public function testRefreshUserRebuildsMerchantUserWhenAgentUsernameIsNotProvidedInMerchantUserTransfer(): void
     {
         // Arrange
-        $merchantUserTransfer = (new MerchantUserTransfer())
-            ->setUser($this->tester->haveUser());
-        $user = new MerchantUser($merchantUserTransfer);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED]);
+        $userTransfer = $this->tester->haveUser([UserTransfer::STATUS => static::STATUS_ACTIVE]);
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+        $user = new MerchantUser($merchantUserTransfer->setUser($userTransfer));
 
         // Act
         $refreshedUser = (new AgentMerchantUserProvider())->refreshUser($user);
 
         // Assert
         $this->assertInstanceOf(MerchantUser::class, $refreshedUser);
-        $this->assertSame($user, $refreshedUser);
+        $this->assertNotSame($user, $refreshedUser);
+        $this->assertSame($userTransfer->getUsernameOrFail(), $refreshedUser->getUserIdentifier());
+    }
+
+    public function testRefreshUserThrowsUserNotFoundExceptionForRestrictedMerchantUser(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED]);
+        $userTransfer = $this->tester->haveUser([UserTransfer::STATUS => static::STATUS_ACTIVE]);
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+        $user = new MerchantUser($merchantUserTransfer->setUser($userTransfer));
+
+        $merchantUserLoginRestrictionPluginMock = $this->createMock(MerchantUserLoginRestrictionPluginInterface::class);
+        $merchantUserLoginRestrictionPluginMock->method('isRestricted')->willReturn(true);
+        $this->tester->setDependency(static::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION, [
+            $merchantUserLoginRestrictionPluginMock,
+        ]);
+
+        // Assert
+        $this->expectException(UserNotFoundException::class);
+
+        // Act
+        (new AgentMerchantUserProvider())->refreshUser($user);
+    }
+
+    public function testRefreshUserThrowsUserNotFoundExceptionForMerchantUserWithoutActiveMerchantUser(): void
+    {
+        // Arrange
+        $merchantUserTransfer = (new MerchantUserTransfer())
+            ->setUser($this->tester->haveUser());
+        $user = new MerchantUser($merchantUserTransfer);
+
+        // Assert
+        $this->expectException(UserNotFoundException::class);
+
+        // Act
+        (new AgentMerchantUserProvider())->refreshUser($user);
     }
 
     /**

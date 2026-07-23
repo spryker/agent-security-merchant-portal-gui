@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Provider;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -29,6 +31,11 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
      * @var string
      */
     protected const COL_STATUS_ACTIVE = 'active';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const string MERCHANT_STATUS_APPROVED = 'approved';
 
     public function loadUserByUsername(string $username): UserInterface
     {
@@ -71,7 +78,7 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         /** @phpstan-var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $user */
         $username = $user->getMerchantUserTransfer()->getAgentUsername();
         if (!$username) {
-            return $user;
+            return $this->refreshRegularMerchantUser($user);
         }
 
         $userTransfer = $this->findUserByUsername($username);
@@ -81,6 +88,45 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
         }
 
         return $user;
+    }
+
+    /**
+     * @phpstan-param \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $user
+     */
+    protected function refreshRegularMerchantUser(UserInterface $user): UserInterface
+    {
+        $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())
+            ->setUsername($user->getUserIdentifier())
+            ->setWithUser(true)
+            ->setStatus(static::COL_STATUS_ACTIVE)
+            ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED);
+
+        $merchantUserTransfer = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->findMerchantUser($merchantUserCriteriaTransfer);
+
+        if ($merchantUserTransfer === null) {
+            $this->throwUserNotFoundException();
+        }
+
+        /** @phpstan-var \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer */
+        $this->assertMerchantUserLoginIsNotRestricted($merchantUserTransfer);
+
+        $merchantUserClassName = $this->getConfig()->getMerchantUserClassName();
+
+        /** @var \Symfony\Component\Security\Core\User\UserInterface $merchantUser */
+        $merchantUser = new $merchantUserClassName($merchantUserTransfer, $user->getRoles());
+
+        return $merchantUser;
+    }
+
+    protected function assertMerchantUserLoginIsNotRestricted(MerchantUserTransfer $merchantUserTransfer): void
+    {
+        foreach ($this->getFactory()->getMerchantUserLoginRestrictionPlugins() as $merchantUserLoginRestrictionPlugin) {
+            if ($merchantUserLoginRestrictionPlugin->isRestricted($merchantUserTransfer)) {
+                $this->throwUserNotFoundException();
+            }
+        }
     }
 
     protected function createSecurityUserByUsername(string $username): UserInterface

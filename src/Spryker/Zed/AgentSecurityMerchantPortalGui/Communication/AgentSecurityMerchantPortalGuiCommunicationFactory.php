@@ -177,6 +177,14 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
         return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_USER);
     }
 
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
+     */
+    public function getMerchantUserLoginRestrictionPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION);
+    }
+
     public function getUserFacade(): AgentSecurityMerchantPortalGuiToUserFacadeInterface
     {
         return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::FACADE_USER);

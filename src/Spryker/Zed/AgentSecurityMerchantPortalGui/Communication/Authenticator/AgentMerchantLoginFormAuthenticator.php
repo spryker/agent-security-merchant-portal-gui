@@ -104,11 +104,11 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
      */
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
-        return new PostAuthenticationToken(
-            $passport->getUser(),
-            $firewallName,
-            $this->assertUserIsPreAuthenticated($passport) ? [static::ACCESS_MODE_PRE_AUTH] : $passport->getUser()->getRoles(),
-        );
+        if ($this->assertUserIsPreAuthenticated($passport)) {
+            return new PostAuthenticationToken($passport->getUser(), $firewallName, [static::ACCESS_MODE_PRE_AUTH]);
+        }
+
+        return new PostAuthenticationToken($passport->getUser(), $firewallName, $passport->getUser()->getRoles());
     }
 
     /**
