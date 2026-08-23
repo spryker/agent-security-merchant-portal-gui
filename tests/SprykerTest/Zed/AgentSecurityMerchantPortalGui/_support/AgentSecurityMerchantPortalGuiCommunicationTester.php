@@ -35,7 +35,6 @@ class AgentSecurityMerchantPortalGuiCommunicationTester extends Actor
     {
         $reflection = new ReflectionClass(SecurityConfigurator::class);
         $property = $reflection->getProperty('securityConfiguration');
-        $property->setAccessible(true);
         $property->setValue(null);
     }
 }
