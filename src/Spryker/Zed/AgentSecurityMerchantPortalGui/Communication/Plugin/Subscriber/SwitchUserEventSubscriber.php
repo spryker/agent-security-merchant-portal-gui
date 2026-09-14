@@ -50,6 +50,43 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
 
             $this->getFactory()->createAuditLogger()->addImpersonationEndedAuditLog();
         }
+
+        $this->addPreviousAdminRole($switchUserEvent);
+    }
+
+    /**
+     * Symfony's SwitchUserListener no longer grants `ROLE_PREVIOUS_ADMIN` to the impersonation
+     * token automatically (it now only exposes impersonation via the IS_IMPERSONATOR attribute).
+     * Spryker's own access rules still check for the literal `ROLE_PREVIOUS_ADMIN` role, so it is
+     * restored here to keep that access rule working.
+     */
+    protected function addPreviousAdminRole(SwitchUserEvent $switchUserEvent): void
+    {
+        $token = $switchUserEvent->getToken();
+
+        if (!$token instanceof SwitchUserToken) {
+            return;
+        }
+
+        $user = $token->getUser();
+
+        if ($user === null) {
+            return;
+        }
+
+        $rolePreviousAdmin = $this->getConfig()->getRolePreviousAdmin();
+
+        if (in_array($rolePreviousAdmin, $token->getRoleNames(), true)) {
+            return;
+        }
+
+        $switchUserEvent->setToken(new SwitchUserToken(
+            $user,
+            $token->getFirewallName(),
+            [...$token->getRoleNames(), $rolePreviousAdmin],
+            $token->getOriginalToken(),
+            $token->getOriginatedFromUri(),
+        ));
     }
 
     protected function findAgentUsername(SwitchUserEvent $switchUserEvent): ?string

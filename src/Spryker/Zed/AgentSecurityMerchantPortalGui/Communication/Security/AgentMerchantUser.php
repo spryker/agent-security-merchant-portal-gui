@@ -111,8 +111,13 @@ class AgentMerchantUser implements AgentMerchantUserInterface, PasswordAuthentic
         return $this->userTransfer;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function getUserIdentifier(): string
     {
+        assert($this->username !== '');
+
         return $this->username;
     }
 
