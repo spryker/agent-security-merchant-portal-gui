@@ -5,6 +5,7 @@
         <property name="username" type="string"/>
         <property name="uuid" type="string" strict="true"/>
         <property name="password" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="UserCollection" strict="true">
@@ -33,6 +34,8 @@
     <transfer name="MerchantUserCriteria">
         <property name="status" type="string"/>
         <property name="merchantStatus" type="string"/>
+        <property name="username" type="string"/>
+        <property name="withUser" type="bool"/>
     </transfer>
 
     <transfer name="AuditLoggerConfigCriteria" strict="true">
