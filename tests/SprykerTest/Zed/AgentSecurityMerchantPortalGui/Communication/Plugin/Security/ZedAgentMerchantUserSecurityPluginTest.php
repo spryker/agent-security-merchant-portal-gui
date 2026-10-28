@@ -188,8 +188,8 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
                 AgentMerchantLoginForm::FORM_NAME => [
                     AgentMerchantLoginForm::FIELD_USERNAME => $userTransfer->getUsername(),
                     AgentMerchantLoginForm::FIELD_PASSWORD => $password,
+                    '_token' => $csrfToken->getValue(),
                 ],
-                '_token' => $csrfToken->getValue(),
             ],
         );
 
@@ -228,6 +228,52 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
                 ],
                 static::TEST_PASSWORD,
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidCsrfTokenDataProvider
+     *
+     * @param array<string, string> $csrfTokenField
+     *
+     * @return void
+     */
+    public function testUserWithValidCredentialsAndInvalidCsrfTokenCanNotLogin(array $csrfTokenField): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::PASSWORD => static::TEST_PASSWORD,
+            UserTransfer::STATUS => static::COL_STATUS_ACTIVE,
+            UserTransfer::IS_MERCHANT_AGENT => true,
+        ]);
+        $container = $this->tester->getContainer();
+        $container->get(static::SERVICE_SESSION)->start();
+
+        // Act
+        $this->tester->getHttpKernelBrowser()->request(
+            'post',
+            static::PATH_LOGIN_CHECK,
+            [
+                AgentMerchantLoginForm::FORM_NAME => [
+                    AgentMerchantLoginForm::FIELD_USERNAME => $userTransfer->getUsername(),
+                    AgentMerchantLoginForm::FIELD_PASSWORD => static::TEST_PASSWORD,
+                ] + $csrfTokenField,
+            ],
+        );
+
+        // Assert
+        $this->assertNull($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken());
+    }
+
+    /**
+     * @return array<string, array<array<string, string>>>
+     */
+    public function invalidCsrfTokenDataProvider(): array
+    {
+        return [
+            'missing token' => [[]],
+            'empty token' => [['_token' => '']],
+            'invalid token' => [['_token' => 'invalid-token']],
         ];
     }
 

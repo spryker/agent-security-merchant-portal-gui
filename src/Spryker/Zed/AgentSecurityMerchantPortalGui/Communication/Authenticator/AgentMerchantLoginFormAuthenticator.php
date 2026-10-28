@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
@@ -32,6 +33,8 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
      * @var string
      */
     protected const AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST = 'agent-security-merchant-portal-gui';
+
+    protected const string CSRF_TOKEN = '_token';
 
     /**
      * @var string
@@ -60,7 +63,10 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
 
         /** @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUserInterface $user */
         $user = $this->agentMerchantUserProvider->loadUserByIdentifier($data[AgentMerchantLoginForm::FIELD_USERNAME]);
-        $badges = [$this->multiFactorAuthBadge->enable($user->getUserTransfer())];
+        $badges = [
+            new CsrfTokenBadge(static::AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST, $data[static::CSRF_TOKEN] ?? null),
+            $this->multiFactorAuthBadge->enable($user->getUserTransfer()),
+        ];
 
         return new Passport(
             new UserBadge($data[AgentMerchantLoginForm::FIELD_USERNAME], function () use ($user) {
