@@ -23,9 +23,6 @@ class AuditLoggerUserProvider implements AuditLoggerUserProviderInterface
      */
     protected const MERCHANT_USER_CLASS_NAME = '\Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser';
 
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     */
     protected TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)

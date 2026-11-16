@@ -17,29 +17,14 @@ use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 
 class SecurityBuilderAuthenticatorExtender implements SecurityBuilderAuthenticatorExtenderInterface
 {
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
-     */
     protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
 
-    /**
-     * @var \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
-     */
     protected AuthenticatorInterface $agentMerchantLoginFormAuthenticator;
 
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
-     */
     protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler;
 
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
-     */
     protected AuthenticationFailureHandlerInterface $authenticationFailureHandler;
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionCheckerInterface
-     */
     protected SymfonyVersionCheckerInterface $symfonyVersionChecker;
 
     public function __construct(

@@ -79,6 +79,8 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
      */
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
 
+    public const string PLUGINS_MERCHANT_PORTAL_AGENT_LOGIN_FORM_EXPANDER = 'PLUGINS_MERCHANT_PORTAL_AGENT_LOGIN_FORM_EXPANDER';
+
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -94,6 +96,7 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         $container = $this->addMerchantUserLoginRestrictionPlugins($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedUiFactory($container);
+        $container = $this->addMerchantPortalAgentLoginFormExpanderPlugins($container);
 
         return $container;
     }
@@ -223,5 +226,22 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         });
 
         return $container;
+    }
+
+    protected function addMerchantPortalAgentLoginFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PORTAL_AGENT_LOGIN_FORM_EXPANDER, function () {
+            return $this->getMerchantPortalAgentLoginFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantPortalLoginFormExpanderPluginInterface>
+     */
+    protected function getMerchantPortalAgentLoginFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

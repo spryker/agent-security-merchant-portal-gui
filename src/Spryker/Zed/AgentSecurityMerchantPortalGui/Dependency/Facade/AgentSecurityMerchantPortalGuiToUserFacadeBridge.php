@@ -37,8 +37,6 @@ class AgentSecurityMerchantPortalGuiToUserFacadeBridge implements AgentSecurityM
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
      * @return mixed
      */
     public function setCurrentUser(UserTransfer $userTransfer)

@@ -30,19 +30,10 @@ class AgentMerchantUser implements AgentMerchantUserInterface, PasswordAuthentic
      */
     protected const string LEGACY_PROTECTED_PROPERTY_PREFIX = "\0*\0";
 
-    /**
-     * @var \Generated\Shared\Transfer\UserTransfer
-     */
     protected UserTransfer $userTransfer;
 
-    /**
-     * @var string
-     */
     protected string $username;
 
-    /**
-     * @var string|null
-     */
     protected ?string $password;
 
     /**
@@ -53,7 +44,6 @@ class AgentMerchantUser implements AgentMerchantUserInterface, PasswordAuthentic
     protected ?string $stateHash = null;
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param list<string> $roles
      */
     public function __construct(UserTransfer $userTransfer, array $roles = [])

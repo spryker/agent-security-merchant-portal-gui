@@ -29,9 +29,6 @@ class AuditLogger implements AuditLoggerInterface
      */
     protected const AUDIT_LOGGER_RECORD_KEY_CONTEXT_TAGS = 'tags';
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\DataProvider\AuditLoggerUserProviderInterface
-     */
     protected AuditLoggerUserProviderInterface $auditLoggerUserProvider;
 
     public function __construct(AuditLoggerUserProviderInterface $auditLoggerUserProvider)
@@ -80,10 +77,7 @@ class AuditLogger implements AuditLoggerInterface
     }
 
     /**
-     * @param string $action
      * @param array<string, mixed> $context
-     *
-     * @return void
      */
     protected function addAuditLog(string $action, array $context): void
     {

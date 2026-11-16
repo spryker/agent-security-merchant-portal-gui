@@ -26,8 +26,6 @@ use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\AuditLogger;
 abstract class AbstractPluginTest extends Unit
 {
     /**
-     * @param string $expectedMessage
-     *
      * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\AgentSecurityMerchantPortalGuiCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getAgentSecurityMerchantPortalGuiCommunicationFactoryMock(
@@ -42,8 +40,6 @@ abstract class AbstractPluginTest extends Unit
     }
 
     /**
-     * @param string $expectedMessage
-     *
      * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\AuditLogger|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getAuditLoggerMock(string $expectedMessage): AuditLogger
@@ -61,8 +57,6 @@ abstract class AbstractPluginTest extends Unit
     }
 
     /**
-     * @param string $expectedMessage
-     *
      * @return \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getLoggerMock(string $expectedMessage): LoggerInterface

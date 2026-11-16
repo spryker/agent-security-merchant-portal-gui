@@ -136,8 +136,6 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
 
     /**
      * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
-     *
-     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionCheckerInterface
      */
     public function createSymfonyVersionChecker(): SymfonyVersionCheckerInterface
     {
@@ -228,5 +226,13 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
     public function getZedUiFactory(): ZedUiFactoryInterface
     {
         return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantPortalLoginFormExpanderPluginInterface>
+     */
+    public function getMerchantPortalAgentLoginFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_PORTAL_AGENT_LOGIN_FORM_EXPANDER);
     }
 }

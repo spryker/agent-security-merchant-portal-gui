@@ -59,16 +59,17 @@ class AgentMerchantLoginForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAction($this->getConfig()->getUrlLoginCheck());
 
         $this->addUserNameField($builder)
-            ->addPasswordField($builder)
-            ->addLoginButton($builder);
+            ->addPasswordField($builder);
+
+        $this->executeMerchantPortalAgentLoginFormExpanderPlugins($builder, $options);
+
+        $this->addLoginButton($builder);
     }
 
     public function getBlockPrefix(): string
@@ -138,5 +139,20 @@ class AgentMerchantLoginForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @param array<string, mixed> $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface<mixed>
+     */
+    protected function executeMerchantPortalAgentLoginFormExpanderPlugins(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        foreach ($this->getFactory()->getMerchantPortalAgentLoginFormExpanderPlugins() as $merchantPortalLoginFormExpanderPlugin) {
+            $builder = $merchantPortalLoginFormExpanderPlugin->expand($builder, $options);
+        }
+
+        return $builder;
     }
 }

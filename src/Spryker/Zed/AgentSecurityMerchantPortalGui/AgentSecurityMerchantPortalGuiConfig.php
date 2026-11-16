@@ -90,8 +90,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines security agent merchant portal login form authenticator name.
      *
      * @api
-     *
-     * @return string
      */
     public function getSecurityAgentMerchantPortalLoginFormAuthenticatorName(): string
     {
@@ -103,8 +101,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines route of the login page.
      *
      * @api
-     *
-     * @return string
      */
     public function getRouteLogin(): string
     {
@@ -116,8 +112,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the URL of the login page.
      *
      * @api
-     *
-     * @return string
      */
     public function getUrlLogin(): string
     {
@@ -129,8 +123,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the URL of the login check page.
      *
      * @api
-     *
-     * @return string
      */
     public function getUrlLoginCheck(): string
     {
@@ -142,8 +134,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the URL of the logout page.
      *
      * @api
-     *
-     * @return string
      */
     public function getUrlLogout(): string
     {
@@ -155,8 +145,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the default target URL.
      *
      * @api
-     *
-     * @return string
      */
     public function getUrlDefaultTarget(): string
     {
@@ -168,8 +156,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the agent merchant portal route pattern.
      *
      * @api
-     *
-     * @return string
      */
     public function getRoutePatternAgentMerchantPortal(): string
     {
@@ -181,8 +167,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines the agent merchant portal login route pattern.
      *
      * @api
-     *
-     * @return string
      */
     public function getRoutePatternAgentMerchantPortalLogin(): string
     {
@@ -194,8 +178,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines security firewall name.
      *
      * @api
-     *
-     * @return string
      */
     public function getSecurityFirewallName(): string
     {
@@ -207,8 +189,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines merchant security firewall name.
      *
      * @api
-     *
-     * @return string
      */
     public function getMerchantUserSecurityFirewallName(): string
     {
@@ -220,8 +200,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines merchant user class name.
      *
      * @api
-     *
-     * @return string
      */
     public function getMerchantUserClassName(): string
     {
@@ -233,8 +211,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines role merchant agent.
      *
      * @api
-     *
-     * @return string
      */
     public function getRoleMerchantAgent(): string
     {
@@ -246,8 +222,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines role allowed to switch.
      *
      * @api
-     *
-     * @return string
      */
     public function getRoleAllowedToSwitch(): string
     {
@@ -259,8 +233,6 @@ class AgentSecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * - Defines role previous admin.
      *
      * @api
-     *
-     * @return string
      */
     public function getRolePreviousAdmin(): string
     {

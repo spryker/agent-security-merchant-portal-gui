@@ -13,14 +13,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class MerchantUserCriteriaExpander implements MerchantUserCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
-     */
     protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
 
-    /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
     protected AuthorizationCheckerInterface $authorizationChecker;
 
     public function __construct(

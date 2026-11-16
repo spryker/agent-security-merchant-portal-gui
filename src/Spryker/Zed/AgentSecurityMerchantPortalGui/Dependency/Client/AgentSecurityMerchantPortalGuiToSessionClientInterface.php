@@ -10,7 +10,6 @@ namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Client;
 interface AgentSecurityMerchantPortalGuiToSessionClientInterface
 {
     /**
-     * @param string $name
      * @param mixed $value
      *
      * @return mixed
@@ -18,8 +17,6 @@ interface AgentSecurityMerchantPortalGuiToSessionClientInterface
     public function set(string $name, $value);
 
     /**
-     * @param string $name
-     *
      * @return mixed
      */
     public function remove(string $name);

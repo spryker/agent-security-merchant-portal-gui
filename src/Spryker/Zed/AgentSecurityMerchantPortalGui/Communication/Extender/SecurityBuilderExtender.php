@@ -25,24 +25,12 @@ class SecurityBuilderExtender implements SecurityBuilderExtenderInterface
 
     protected const string SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
-     */
     protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface
-     */
     protected OptionsBuilderInterface $optionsBuilder;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     protected EventSubscriberInterface $switchUserEventSubscriber;
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Extender\SecurityBuilderAuthenticatorExtenderInterface
-     */
     protected SecurityBuilderAuthenticatorExtenderInterface $securityBuilderAuthenticatorExtender;
 
     public function __construct(

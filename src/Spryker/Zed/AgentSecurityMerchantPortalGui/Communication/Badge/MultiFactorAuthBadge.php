@@ -22,19 +22,10 @@ class MultiFactorAuthBadge implements BadgeInterface
      */
     protected const MERCHANT_AGENT_USER_MULTI_FACTOR_AUTHENTICATION_HANDLER_NAME = 'MERCHANT_AGENT_USER_MULTI_FACTOR_AUTHENTICATION';
 
-    /**
-     * @var bool
-     */
     protected bool $isRequired = false;
 
-    /**
-     * @var bool
-     */
     protected bool $isResolved = true;
 
-    /**
-     * @var int|null
-     */
     protected ?int $status = null;
 
     /**
@@ -71,8 +62,6 @@ class MultiFactorAuthBadge implements BadgeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
      * @return $this
      */
     public function enable(UserTransfer $userTransfer)

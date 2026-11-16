@@ -88,9 +88,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
      */
     protected const COL_STATUS_BLOCKED = 'blocked';
 
-    /**
-     * @var \SprykerTest\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiCommunicationTester
-     */
     protected AgentSecurityMerchantPortalGuiCommunicationTester $tester;
 
     protected function _before(): void
@@ -159,9 +156,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
      * @dataProvider getUserCanNotLoginDataProvider
      *
      * @param array<string, mixed> $userData
-     * @param string $password
-     *
-     * @return void
      */
     public function testUserCanNotLogin(array $userData, string $password): void
     {
@@ -235,8 +229,6 @@ class ZedAgentMerchantUserSecurityPluginTest extends Unit
      * @dataProvider invalidCsrfTokenDataProvider
      *
      * @param array<string, string> $csrfTokenField
-     *
-     * @return void
      */
     public function testUserWithValidCredentialsAndInvalidCsrfTokenCanNotLogin(array $csrfTokenField): void
     {

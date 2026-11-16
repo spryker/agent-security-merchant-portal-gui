@@ -162,8 +162,6 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
     /**
      * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     *
-     * @return void
      */
     protected function throwUserNotFoundException(): void
     {

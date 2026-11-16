@@ -97,9 +97,6 @@ class AgentMerchantUserProviderTest extends Unit
      */
     protected const string PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION = 'PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION';
 
-    /**
-     * @var \SprykerTest\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiCommunicationTester
-     */
     protected AgentSecurityMerchantPortalGuiCommunicationTester $tester;
 
     protected function setUp(): void
@@ -209,8 +206,6 @@ class AgentMerchantUserProviderTest extends Unit
      * @dataProvider refreshUserThrowsUserNotFoundExceptionDataProvider
      *
      * @param array<string, string|bool> $userData
-     *
-     * @return void
      */
     protected function testRefreshUserThrowsUserNotFoundExceptionForAgentMerchantUser(array $userData): void
     {
@@ -229,8 +224,6 @@ class AgentMerchantUserProviderTest extends Unit
      * @dataProvider refreshUserThrowsUserNotFoundExceptionDataProvider
      *
      * @param array<string, string|bool> $userData
-     *
-     * @return void
      */
     public function testRefreshUserThrowsUserNotFoundExceptionForMerchantUser(array $userData): void
     {

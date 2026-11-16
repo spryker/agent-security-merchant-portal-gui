@@ -21,19 +21,10 @@ class OptionsBuilder implements OptionsBuilderInterface
      */
     protected const FORM_FIELD_CSRF_TOKEN = '_token';
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
-     */
     protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
 
-    /**
-     * @var \Symfony\Component\Security\Core\User\UserProviderInterface
-     */
     protected UserProviderInterface $agentMerchantUserProvider;
 
-    /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionCheckerInterface
-     */
     protected SymfonyVersionCheckerInterface $symfonyVersionChecker;
 
     public function __construct(
